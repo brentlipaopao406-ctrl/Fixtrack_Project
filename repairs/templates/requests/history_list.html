@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}History | FixTrack{% endblock %}
+{% block content %}
+<div class="page-title"><div><span class="eyebrow">AUDIT TRAIL</span><h1>Repair History</h1><p>Review all status and assignment activity.</p></div></div>
+<div class="table-panel"><table><thead><tr><th>Ticket</th><th>Change</th><th>Technician</th><th>By</th><th>Notes</th><th>Date</th></tr></thead><tbody>{% for item in history %}<tr><td><a href="{% url 'request_detail' item.repair_request.id %}">#{{ item.repair_request.id }}</a></td><td>{{ item.old_status|default:'—' }} → {{ item.new_status }}</td><td>{% if item.technician %}{{ item.technician.name }}{% else %}—{% endif %}</td><td>{% if item.changed_by %}{{ item.changed_by.username }}{% else %}System{% endif %}</td><td>{{ item.notes }}</td><td>{{ item.created_at|date:'M d, Y h:i A' }}</td></tr>{% empty %}<tr><td colspan="6">No history yet.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

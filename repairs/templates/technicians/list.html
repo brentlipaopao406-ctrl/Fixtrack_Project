@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Technicians | FixTrack{% endblock %}
+{% block content %}
+<div class="page-title"><div><span class="eyebrow">TEAM</span><h1>Technicians</h1><p>Manage repair staff and assignments.</p></div><a class="primary" href="{% url 'technician_add' %}">+ Add Technician</a></div>
+<div class="card-grid">{% for technician in technicians %}<article class="mini-card"><div class="avatar">{{ technician.name|first|upper }}</div><div><h3>{{ technician.name }}</h3><p>{{ technician.specialization }}</p><small>{{ technician.phone|default:'No phone' }} • {{ technician.email|default:'No email' }}</small></div><span class="badge {% if technician.is_active %}status{% else %}category{% endif %}">{% if technician.is_active %}Active{% else %}Inactive{% endif %}</span><div class="mini-card-footer"><span>{{ technician.request_count }} assigned</span><span><a href="{% url 'technician_edit' technician.id %}">Edit</a> • <a class="danger-text" href="{% url 'technician_delete' technician.id %}">Delete</a></span></div></article>{% empty %}<div class="empty"><div>👷</div><h3>No technicians yet</h3><p>Add your first technician.</p></div>{% endfor %}</div>
+{% endblock %}

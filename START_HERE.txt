@@ -1,0 +1,32 @@
+FIXTRACK - COMPLETE REPAIR MANAGEMENT SYSTEM
+
+1. Open this folder in VS Code.
+2. Open Command Prompt / PowerShell in this folder.
+3. Create a virtual environment:
+   python -m venv venv
+4. Activate it (Windows):
+   venv\Scripts\activate
+5. Install packages:
+   pip install -r requirements.txt
+6. Apply the included database upgrade:
+   python manage.py migrate
+7. Start the server:
+   python manage.py runserver
+8. Open:
+   http://127.0.0.1:8000/
+
+The supplied db.sqlite3 contains your existing users and repair request data.
+A backup is also included as db_original_backup.sqlite3.
+
+Main features:
+- Login / Logout
+- Repair request submission
+- Search and priority sorting
+- Request status updates with notes
+- Technician management
+- Technician assignment
+- Repair history / timeline
+- Request detail page
+- Category management
+- Admin-only management controls
+- Responsive polished dashboard

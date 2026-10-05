@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | FixTrack{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><span class="eyebrow">MAINTENANCE PORTAL</span><h1>Good to see you, {{ request.user.username }}.</h1><p>Monitor, submit, assign, and track repair requests from one place.</p></div>
+  <div class="hero-badge">School & Community Repairs</div>
+</section>
+
+<section class="stats-grid">
+  <div class="stat-card"><span class="stat-icon blue">📋</span><span class="stat-label">Total Requests</span><strong>{{ total_requests }}</strong></div>
+  <div class="stat-card"><span class="stat-icon orange">⏳</span><span class="stat-label">Pending</span><strong>{{ pending_requests }}</strong></div>
+  <div class="stat-card"><span class="stat-icon purple">🔧</span><span class="stat-label">In Progress</span><strong>{{ in_progress_requests }}</strong></div>
+  <div class="stat-card"><span class="stat-icon green">✓</span><span class="stat-label">Completed</span><strong>{{ completed_requests }}</strong></div>
+</section>
+
+<section class="two-col">
+  <div class="panel">
+    <div class="panel-head"><div><h2>Submit Repair Request</h2><p>Report an issue that needs attention.</p></div><span ></span></div>
+    <form action="{% url 'add_request' %}" method="post" enctype="multipart/form-data" class="form-grid">{% csrf_token %}
+      <div class="field"><label>Category</label><select name="category" required><option value="">Select category</option>{% for category in categories %}<option value="{{ category.name }}">{{ category.name }}</option>{% endfor %}</select></div>
+      <div class="field"><label>Priority</label><select name="priority" required><option value="">Select priority</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select></div>
+      <div class="field full-span"><label>Location</label><input type="text" name="location" placeholder="Example: Room 304" required></div>
+      <div class="field full-span"><label>Problem description</label><textarea name="problem" placeholder="Describe the problem..." required></textarea></div>
+      <div class="field full-span"><label>Photo <small>(optional)</small></label><input type="file" name="image" accept="image/png,image/jpeg,image/webp"></div>
+      <button class="primary full-span" type="submit">Submit Repair Request</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><h2>Search & Filter</h2><p>Find tickets quickly.</p></div><span></span></div>
+    <form action="{% url 'home' %}" method="get" class="search-row"><input name="q" value="{{ search_query }}" placeholder="Search requests..."><button class="primary" type="submit">Search</button></form>
+    <div class="quick-actions">
+      <a class="secondary" href="{% url 'home' %}?sort=priority{% if search_query %}&q={{ search_query|urlencode }}{% endif %}">Sort Priority</a>
+      <a class="secondary" href="{% url 'home' %}">↺ Reset</a>
+    </div>
+   
+  </div>
+</section>
+
+<section class="section-head"><div><h2>Repair Requests</h2><p>{{ requests|length }} request{% if requests|length != 1 %}s{% endif %} shown</p></div></section>
+{% if requests %}
+<div class="request-grid">
+{% for repair_request in requests %}
+<article class="request-card">
+  <div class="request-top"><div><div class="ticket-id">TICKET #{{ repair_request.id }}</div><span>{{ repair_request.created_at|date:'M d, Y • h:i A' }}</span></div><div class="badges"><span class="badge priority-{{ repair_request.priority|lower }}">{{ repair_request.priority }}</span><span class="badge category">{{ repair_request.get_category_display }}</span><span class="badge status">{{ repair_request.status }}</span></div></div>
+  
+  <div class="detail-grid">
+    <div><span>Reporter</span><strong>{{ repair_request.reporter.username }}</strong></div>
+    <div><span>Location</span><strong>{{ repair_request.location }}</strong></div>
+    <div class="wide"><span>Problem</span><strong>{{ repair_request.problem }}</strong></div>
+    <div><span>Technician</span><strong>{% if repair_request.assigned_technician %}{{ repair_request.assigned_technician.name }}{% else %}Unassigned{% endif %}</strong></div>
+  </div>
+  <div class="card-actions"><a class="secondary" href="{% url 'request_detail' repair_request.id %}">View Details</a>{% if request.user.is_staff %}<form method="post" action="{% url 'assign_technician' repair_request.id %}" class="inline-form">{% csrf_token %}<select name="technician"><option value="">Unassigned</option>{% for technician in technicians %}<option value="{{ technician.id }}" {% if repair_request.assigned_technician_id == technician.id %}selected{% endif %}>{{ technician.name }}</option>{% endfor %}</select><button class="secondary" type="submit">Assign</button></form><form method="post" action="{% url 'update_status' repair_request.id %}" class="inline-form">{% csrf_token %}<select name="status"><option value="Pending" {% if repair_request.status == 'Pending' %}selected{% endif %}>Pending</option><option value="In Progress" {% if repair_request.status == 'In Progress' %}selected{% endif %}>In Progress</option><option value="Completed" {% if repair_request.status == 'Completed' %}selected{% endif %}>Completed</option><option value="Cancelled" {% if repair_request.status == 'Cancelled' %}selected{% endif %}>Cancelled</option></select><input type="text" name="notes" placeholder="Optional note"><button class="secondary" type="submit">Update</button></form><form method="post" action="{% url 'delete_request' repair_request.id %}" onsubmit="return confirm('Delete this repair request?');">{% csrf_token %}<button class="danger" type="submit">Delete</button></form>{% endif %}</div>
+</article>
+{% endfor %}
+</div>
+
+{% else %}<div class="empty"><div>📭</div><h3>No repair requests found</h3><p>Try submitting a new request or changing your search.</p></div>
+{% endif %}
+{% endblock %}

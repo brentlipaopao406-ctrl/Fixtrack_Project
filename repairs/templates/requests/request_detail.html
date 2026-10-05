@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Ticket #{{ repair_request.id }} | FixTrack{% endblock %}
+{% block content %}
+<div class="page-title"><div><span class="eyebrow">REPAIR TICKET</span><h1>Ticket #{{ repair_request.id }}</h1><p>{{ repair_request.get_category_display }} • {{ repair_request.location }}</p></div><a class="secondary" href="{% url 'home' %}">Dashboard</a></div>
+<div class="detail-layout"><section class="panel">
+  <div class="ticket-summary"><span class="badge priority-{{ repair_request.priority|lower }}">{{ repair_request.priority }}</span><span class="badge status">{{ repair_request.status }}</span></div>
+  {% if repair_request.image %}<img class="detail-image" src="{{ repair_request.image.url }}" alt="Repair photo">{% endif %}
+  <div class="detail-list"><div><span>Reporter</span><strong>{{ repair_request.reporter.username }}</strong></div><div><span>Category</span><strong>{{ repair_request.get_category_display }}</strong></div><div><span>Location</span><strong>{{ repair_request.location }}</strong></div><div><span>Technician</span><strong>{% if repair_request.assigned_technician %}{{ repair_request.assigned_technician.name }}{% else %}Unassigned{% endif %}</strong></div><div class="wide"><span>Problem</span><strong>{{ repair_request.problem }}</strong></div><div><span>Created</span><strong>{{ repair_request.created_at|date:'M d, Y h:i A' }}</strong></div></div>
+</section><section class="panel"><div class="panel-head"><div><h2>Repair History</h2><p>Status and assignment timeline.</p></div><span></span></div><div class="timeline">{% for item in history %}<div class="timeline-item"><div class="timeline-dot"></div><div><strong>{{ item.new_status }}</strong><small>{{ item.created_at|date:'M d, Y h:i A' }} • {% if item.changed_by %}{{ item.changed_by.username }}{% else %}System{% endif %}</small><p>{% if item.technician %}Technician: {{ item.technician.name }}<br>{% endif %}{{ item.notes }}</p></div></div>{% empty %}<p>No history yet.</p>{% endfor %}</div></section></div>
+{% endblock %}

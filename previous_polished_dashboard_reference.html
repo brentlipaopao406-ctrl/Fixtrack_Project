@@ -1,0 +1,2144 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FixTrack | Repair Management System</title>
+
+
+<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+  
+
+    <style>
+
+        /* =========================================================
+           FIXTRACK — POLISHED MODERN UI
+        ========================================================= */
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-deep: #1e3a8a;
+            --primary-soft: #eff6ff;
+
+            --indigo: #4f46e5;
+            --indigo-soft: #eef2ff;
+
+            --green: #16a34a;
+            --green-soft: #ecfdf3;
+
+            --orange: #f59e0b;
+            --orange-soft: #fffbeb;
+
+            --red: #dc2626;
+            --red-soft: #fef2f2;
+
+            --purple: #7c3aed;
+            --purple-soft: #f5f3ff;
+
+            --cyan: #0891b2;
+            --cyan-soft: #ecfeff;
+
+            --dark: #0f172a;
+            --text: #334155;
+            --muted: #64748b;
+            --subtle: #94a3b8;
+
+            --border: #e2e8f0;
+            --border-strong: #cbd5e1;
+
+            --background: #f5f7fb;
+            --white: #ffffff;
+
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+
+            --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.05);
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+            --shadow-lg: 0 18px 45px rgba(15, 23, 42, 0.11);
+            --focus-ring: 0 0 0 4px rgba(37, 99, 235, 0.11);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 26px;
+            background:
+                radial-gradient(circle at 4% 0%, rgba(37, 99, 235, 0.08), transparent 24%),
+                radial-gradient(circle at 96% 4%, rgba(79, 70, 229, 0.08), transparent 23%),
+                linear-gradient(180deg, #f8fbff 0%, #f5f7fb 46%, #f3f6fa 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(rgba(255,255,255,0.22) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.22) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,.34), transparent 65%);
+        }
+
+        .container {
+            width: min(1380px, 100%);
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 22px;
+            padding: 17px 20px;
+            margin-bottom: 28px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            overflow: hidden;
+        }
+
+        .navbar::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--indigo), #06b6d4);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
+        }
+
+        .brand-icon {
+            width: 52px;
+            height: 52px;
+            flex: 0 0 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            color: white;
+            font-size: 22px;
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.24);
+        }
+
+        .brand-text h1 {
+            font-size: 19px;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.45px;
+        }
+
+        .brand-text p {
+            margin-top: 4px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .user-name {
+            color: var(--dark);
+            font-weight: 750;
+        }
+
+        .role-badge {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid #bfdbfe;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .45px;
+            text-transform: uppercase;
+        }
+
+        .logout-btn {
+            text-decoration: none;
+            color: #b91c1c;
+            background: #fff7f7;
+            border: 1px solid #fecaca;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        .logout-btn:hover {
+            color: #fff;
+            background: var(--red);
+            border-color: var(--red);
+            transform: translateY(-1px);
+            box-shadow: 0 7px 16px rgba(220, 38, 38, .16);
+        }
+
+        /* =========================================================
+           FLASH POPUP
+        ========================================================= */
+
+        .flash-messages {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(92%, 520px);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .alert {
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, .14);
+            opacity: 0;
+            transform: translateY(-16px) scale(.97);
+            animation:
+                alertIn .45s cubic-bezier(.22,1,.36,1) forwards,
+                alertOut .55s ease 3.2s forwards;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        @keyframes alertIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes alertOut {
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(.97);
+            }
+        }
+
+        /* =========================================================
+           WELCOME
+        ========================================================= */
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin: 6px 2px 25px;
+        }
+
+        .welcome h2 {
+            font-size: clamp(25px, 3vw, 31px);
+            font-weight: 850;
+            letter-spacing: -1px;
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .welcome-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 13px;
+            background: rgba(255,255,255,.86);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* =========================================================
+           STATISTICS
+        ========================================================= */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 19px;
+            box-shadow: var(--shadow-sm);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            right: -54px;
+            top: -60px;
+            border-radius: 50%;
+            opacity: .75;
+            z-index: -1;
+        }
+
+        .stat-card.blue::before { background: #dbeafe; }
+        .stat-card.orange::before { background: #fef3c7; }
+        .stat-card.green::before { background: #dcfce7; }
+        .stat-card.purple::before { background: #ede9fe; }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: #d5deeb;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            font-size: 18px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.55);
+        }
+
+        .blue .stat-icon { background: var(--primary-soft); color: var(--primary); }
+        .orange .stat-icon { background: var(--orange-soft); color: var(--orange); }
+        .green .stat-icon { background: var(--green-soft); color: var(--green); }
+        .purple .stat-icon { background: var(--purple-soft); color: var(--purple); }
+
+        .stat-label {
+            margin-top: 14px;
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 650;
+        }
+
+        .stat-number {
+            margin-top: 3px;
+            font-size: 28px;
+            line-height: 1.05;
+            font-weight: 850;
+            letter-spacing: -1px;
+        }
+
+        /* =========================================================
+           PANELS
+        ========================================================= */
+
+        .top-section {
+            display: grid;
+            grid-template-columns: 1.35fr .65fr;
+            gap: 20px;
+            margin-bottom: 31px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .panel-icon {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: linear-gradient(180deg, var(--primary-soft), var(--indigo-soft));
+            color: var(--primary);
+            font-size: 18px;
+            box-shadow: inset 0 0 0 1px rgba(37,99,235,.07);
+        }
+
+        .panel-header h2 {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.25px;
+        }
+
+        .panel-header p {
+            margin-top: 4px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: .05px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            min-width: 0;
+            font-family: inherit;
+            font-size: 13px;
+            color: var(--dark);
+            outline: none;
+            transition: .2s ease;
+        }
+
+        input[type="text"] {
+            height: 47px;
+            padding: 0 13px;
+            background: #fbfcfe;
+            border: 1px solid var(--border-strong);
+            border-radius: 11px;
+        }
+
+        input[type="text"]:hover,
+        select:hover {
+            border-color: #aebccc;
+            background: #fff;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: var(--focus-ring);
+        }
+
+        input::placeholder {
+            color: #9aa8ba;
+        }
+
+        select {
+            height: 47px;
+            padding: 0 14px;
+            border: 1px solid var(--border-strong);
+            border-radius: 11px;
+            background: #fff;
+            font-weight: 650;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           FILE UPLOAD
+        ========================================================= */
+
+        .file-upload-box {
+            min-height: 116px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px dashed #c6d2df;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            background: linear-gradient(180deg, #fbfdff, #f8fafc);
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .file-upload-box:hover {
+            border-color: #93c5fd;
+            background: var(--primary-soft);
+            transform: translateY(-1px);
+        }
+
+        .upload-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 7px;
+            border-radius: 11px;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(15,23,42,.07);
+            font-size: 17px;
+        }
+
+        .upload-prompt {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .upload-prompt strong {
+            color: var(--dark);
+            font-size: 12px;
+        }
+
+        .upload-preview {
+            display: none;
+            width: 100%;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .upload-preview img {
+            width: 58px;
+            height: 58px;
+            object-fit: cover;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-name {
+            font-size: 12px;
+            font-weight: 750;
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-subtext {
+            margin-top: 3px;
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 750;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 48px;
+            border-radius: 12px;
+            color: #fff;
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            box-shadow: 0 10px 22px rgba(37, 99, 235, .21);
+            font-size: 13px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(37, 99, 235, .27);
+            filter: saturate(1.04);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary,
+        .btn-danger,
+        .btn-sort {
+            height: 42px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .btn-secondary {
+            padding: 0 15px;
+            color: #334155;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #eef2f7;
+            border-color: #cbd5e1;
+        }
+
+        .btn-danger {
+            padding: 0 14px;
+            color: #b91c1c;
+            background: var(--red-soft);
+            border: 1px solid #fecaca;
+        }
+
+        .btn-danger:hover {
+            color: #fff;
+            background: var(--red);
+            border-color: var(--red);
+            box-shadow: 0 8px 16px rgba(220,38,38,.15);
+        }
+
+        .btn-sort {
+            padding: 0 14px;
+            color: #15803d;
+            background: var(--green-soft);
+            border: 1px solid #bbf7d0;
+        }
+
+        .btn-sort:hover {
+            color: #fff;
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        .search-btn {
+            min-width: 92px;
+            padding: 0 17px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            box-shadow: 0 7px 15px rgba(37, 99, 235, .14);
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .action-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .action-row form {
+            width: 100%;
+        }
+
+        /* =========================================================
+           REQUESTS HEADER
+        ========================================================= */
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 19px;
+            font-weight: 850;
+            letter-spacing: -.45px;
+        }
+
+        .ticket-count {
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.88);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 750;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* =========================================================
+           REQUEST GRID + CARD
+        ========================================================= */
+
+        .requests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 18px;
+        }
+
+        .request-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,.95);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+
+        .request-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #4f46e5, #06b6d4);
+            opacity: 0;
+            transition: opacity .2s ease;
+        }
+
+        .request-card:hover {
+            transform: translateY(-4px);
+            border-color: #cfd9e6;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .request-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            padding-bottom: 13px;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .card-id {
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 850;
+            letter-spacing: .45px;
+        }
+
+        .card-date {
+            display: block;
+            margin-top: 4px;
+            color: var(--subtle);
+            font-size: 10px;
+        }
+
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 8px;
+            border-radius: 999px;
+            font-size: 8px;
+            font-weight: 850;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            white-space: nowrap;
+        }
+
+        .badge-priority-High {
+            color: var(--red);
+            background: var(--red-soft);
+            border: 1px solid #fecaca;
+        }
+
+        .badge-priority-Medium {
+            color: #b45309;
+            background: var(--orange-soft);
+            border: 1px solid #fde68a;
+        }
+
+        .badge-priority-Low {
+            color: #15803d;
+            background: var(--green-soft);
+            border: 1px solid #bbf7d0;
+        }
+
+        .badge-category {
+            color: var(--cyan);
+            background: var(--cyan-soft);
+            border: 1px solid #a5f3fc;
+        }
+
+        .badge-status {
+            color: var(--primary);
+            background: var(--primary-soft);
+            border: 1px solid #bfdbfe;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 13px;
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+            background: #f8fafc;
+        }
+
+        .card-detail {
+            display: flex;
+            gap: 7px;
+            margin-bottom: 9px;
+            color: var(--text);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .card-detail strong {
+            flex-shrink: 0;
+            width: 70px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 17px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .card-actions form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            margin: 0;
+        }
+
+        .card-actions select {
+            width: 190px;
+            min-width: 190px;
+            height: 42px;
+            flex: 1;
+            border-radius: 10px;
+            background: #f8fafc;
+            font-size: 12px;
+        }
+
+        .card-actions button {
+            white-space: nowrap;
+        }
+
+        /* =========================================================
+           EMPTY STATE / FOOTER
+        ========================================================= */
+
+        .empty-state {
+            padding: 70px 20px;
+            text-align: center;
+            background: rgba(255,255,255,.9);
+            border: 1px dashed #cbd5e1;
+            border-radius: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            background: var(--primary-soft);
+            font-size: 25px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .empty-state span {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        footer {
+            padding: 32px 10px 9px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .top-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 14px;
+            }
+
+            .navbar {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 17px;
+            }
+
+            .user-info {
+                justify-content: flex-start;
+                width: 100%;
+            }
+
+            .welcome {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .welcome h2 {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 23px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .requests-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .card-actions form {
+                width: 100%;
+            }
+
+            .card-actions select {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .card-actions .btn-danger {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 19px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+                height: 44px;
+            }
+
+            .action-row {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+            }
+
+            .badges-container {
+                justify-content: flex-start;
+            }
+
+            .flash-messages {
+                top: 15px;
+            }
+
+            .brand-text h1 {
+                font-size: 18px;
+            }
+
+            .welcome-date {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛠️
+            </div>
+
+
+            <div class="brand-text">
+
+                <h1>
+                    FixTrack
+                </h1>
+
+                <p>
+                    Repair & Maintenance Management
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="user-info">
+
+            <span>
+
+                Welcome back,
+
+                <span class="user-name">
+                    {{ request.user.username }}
+                </span>
+
+            </span>
+
+
+            <span class="role-badge">
+
+                {% if request.user.is_staff %}
+                    ADMIN
+                {% else %}
+                    TEACHER
+                {% endif %}
+
+            </span>
+
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         DJANGO FLASH MESSAGES
+    ====================================================== -->
+
+    {% if messages %}
+
+        <div class="flash-messages">
+
+            {% for message in messages %}
+
+                <div class="alert alert-{{ message.tags }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         WELCOME
+    ====================================================== -->
+
+    <section class="welcome">
+
+        <div>
+
+            <h2>
+                Maintenance Dashboard
+            </h2>
+
+            <p>
+                Monitor, submit, and manage repair requests in one place.
+            </p>
+
+        </div>
+
+
+        <div class="welcome-date">
+            🗓️ School Maintenance Portal
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <section class="stats-grid">
+
+
+        <div class="stat-card blue">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    📋
+                </div>
+
+            </div>
+
+            <div class="stat-label">
+                Total Requests
+            </div>
+
+            <div class="stat-number">
+                {{ total_requests }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card orange">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    ⏳
+                </div>
+
+            </div>
+
+            <div class="stat-label">
+                Pending Requests
+            </div>
+
+            <div class="stat-number">
+                {{ pending_requests }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+            </div>
+
+            <div class="stat-label">
+                Completed
+            </div>
+
+            <div class="stat-number">
+                {{ completed_requests }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card purple">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    🔧
+                </div>
+
+            </div>
+
+            <div class="stat-label">
+                In Progress
+            </div>
+
+            <div class="stat-number">
+                {{ in_progress_requests }}
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TOP SECTION
+    ====================================================== -->
+
+    <section class="top-section">
+
+
+        <!-- =================================================
+             SUBMIT REQUEST
+        ================================================== -->
+
+        <div class="panel">
+
+
+            <div class="panel-header">
+
+                <div class="panel-icon">
+                    📝
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Submit Repair Request
+                    </h2>
+
+                    <p>
+                        Report a problem that needs attention.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                action="{% url 'add_request' %}"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Category
+                        </label>
+
+
+                        <select
+                            name="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="Technology">
+                                Technology / IT
+                            </option>
+
+                            <option value="Furniture">
+                                Furniture
+                            </option>
+
+                            <option value="Electrical">
+                                Electrical
+                            </option>
+
+                            <option value="Plumbing">
+                                Plumbing
+                            </option>
+
+                            <option value="HVAC">
+                                HVAC / Air Conditioning
+                            </option>
+
+                            <option value="General">
+                                General Building
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Priority
+                        </label>
+
+
+                        <select
+                            name="priority"
+                            required
+                        >
+
+                            <option value="">
+                                Select priority
+                            </option>
+
+                            <option value="High">
+                                🔴 High
+                            </option>
+
+                            <option value="Medium">
+                                🟡 Medium
+                            </option>
+
+                            <option value="Low">
+                                🟢 Low
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        Location
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Example: Room 101"
+                        required
+                        minlength="3"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        Problem Description
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="problem"
+                        placeholder="Describe the problem..."
+                        required
+                        minlength="3"
+                    >
+
+                </div>
+
+
+                <!-- PHOTO -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        Photo
+
+                        <span
+                            style="
+                                font-weight:400;
+                                color:#94a3b8;
+                            "
+                        >
+                            (optional)
+                        </span>
+
+                    </label>
+
+
+                    <div
+                        class="file-upload-box"
+
+                        onclick="
+                            document
+                            .getElementById('imageInput')
+                            .click()
+                        "
+                    >
+
+
+                        <input
+                            type="file"
+                            name="image"
+                            id="imageInput"
+                            accept="image/png,image/jpeg,image/webp"
+                            style="display:none;"
+                            onchange="handleFileSelect(event)"
+                        >
+
+
+                        <div
+                            id="upload-prompt"
+                            class="upload-prompt"
+                        >
+
+                            <div class="upload-icon">
+                                📷
+                            </div>
+
+                            <strong>
+                                Click to upload a photo
+                            </strong>
+
+                            <br>
+
+                            JPG, PNG or WebP • Maximum 5 MB
+
+                        </div>
+
+
+                        <div
+                            id="upload-preview"
+                            class="upload-preview"
+                        >
+
+                            <img
+                                id="preview-img"
+                                src=""
+                                alt="Preview"
+                            >
+
+
+                            <div>
+
+                                <div
+                                    id="file-name"
+                                    class="file-name"
+                                >
+                                </div>
+
+
+                                <div class="file-subtext">
+                                    ✓ Image selected
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    Submit Repair Request
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- =================================================
+             SEARCH
+        ================================================== -->
+
+        <div class="panel">
+
+
+            <div class="panel-header">
+
+                <div class="panel-icon">
+                    🔎
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Search & Filter
+                    </h2>
+
+                    <p>
+                        Quickly find repair tickets.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                action="{% url 'home' %}"
+                method="GET"
+                class="search-box"
+            >
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ search_query }}"
+                    placeholder="Search requests..."
+                >
+
+
+                <button
+                    type="submit"
+                    class="search-btn"
+                >
+                    Search
+                </button>
+
+            </form>
+
+
+            <div class="action-row">
+
+
+                <form
+                    action="{% url 'home' %}"
+                    method="GET"
+                >
+
+                    <input
+                        type="hidden"
+                        name="sort"
+                        value="priority"
+                    >
+
+
+                    {% if search_query %}
+
+                        <input
+                            type="hidden"
+                            name="q"
+                            value="{{ search_query }}"
+                        >
+
+                    {% endif %}
+
+
+                    <button
+                        type="submit"
+                        class="btn-sort"
+                        style="width:100%;"
+                    >
+                        ↕ Sort Priority
+                    </button>
+
+                </form>
+
+
+                <form
+                    action="{% url 'home' %}"
+                    method="GET"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn-secondary"
+                        style="width:100%;"
+                    >
+                        ↺ Reset
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         REQUESTS
+    ====================================================== -->
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Repair Requests
+        </h2>
+
+
+        <div class="ticket-count">
+
+            {{ requests|length }}
+
+            request{% if requests|length != 1 %}s{% endif %}
+
+        </div>
+
+    </div>
+
+
+    {% if requests %}
+
+
+        <div class="requests-grid">
+
+
+            {% for repair_request in requests %}
+
+
+                <article class="request-card">
+
+
+                    <!-- CARD HEADER -->
+
+                    <div class="card-header">
+
+
+                        <div>
+
+                            <div class="card-id">
+                                TICKET #{{ repair_request.id }}
+                            </div>
+
+
+                            <div class="card-date">
+                                {{ repair_request.created_at|date:"Y-m-d" }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="badges-container">
+
+
+                            <span
+                                class="
+                                    badge
+                                    badge-priority-{{ repair_request.priority }}
+                                "
+                            >
+                                {{ repair_request.priority }}
+                            </span>
+
+
+                            <span class="badge badge-category">
+                                {{ repair_request.get_category_display }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- IMAGE -->
+
+                    {% if repair_request.image %}
+
+                        <img
+                            src="{{ repair_request.image.url }}"
+                            class="card-image"
+                            alt="Repair request photo"
+                        >
+
+                    {% endif %}
+
+
+                    <!-- DETAILS -->
+
+                    <div class="card-detail">
+
+                        <strong>
+                            Reporter
+                        </strong>
+
+
+                        <span>
+                            {{ repair_request.reporter.username }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-detail">
+
+                        <strong>
+                            Location
+                        </strong>
+
+
+                        <span>
+                            {{ repair_request.location }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-detail">
+
+                        <strong>
+                            Problem
+                        </strong>
+
+
+                        <span>
+                            {{ repair_request.problem }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-detail">
+
+                        <strong>
+                            Status
+                        </strong>
+
+
+                        <span class="badge badge-status">
+
+                            {{ repair_request.status }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ADMIN CONTROLS
+                    ================================================== -->
+
+                    {% if request.user.is_staff %}
+
+
+                        <div class="card-actions">
+
+
+                            <form
+                                action="{% url 'update_status' repair_request.id %}"
+                                method="POST"
+                            >
+
+                                {% csrf_token %}
+
+
+                                <select name="status">
+
+                                    <option
+                                        value="Pending"
+                                        {% if repair_request.status == "Pending" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Pending
+                                    </option>
+
+
+                                    <option
+                                        value="In Progress"
+                                        {% if repair_request.status == "In Progress" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        In Progress
+                                    </option>
+
+
+                                    <option
+                                        value="Completed"
+                                        {% if repair_request.status == "Completed" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Completed
+                                    </option>
+
+
+                                    <option
+                                        value="Cancelled"
+                                        {% if repair_request.status == "Cancelled" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Cancelled
+                                    </option>
+
+                                </select>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn-secondary"
+                                >
+                                    Update
+                                </button>
+
+                            </form>
+
+
+                            <form
+                                action="{% url 'delete_request' repair_request.id %}"
+                                method="POST"
+                            >
+
+                                {% csrf_token %}
+
+
+                                <button
+                                    type="submit"
+                                    class="btn-danger"
+
+                                    onclick="
+                                        return confirm(
+                                            'Are you sure you want to delete this repair request?'
+                                        );
+                                    "
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </article>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+
+            <p>
+                No repair requests found
+            </p>
+
+
+            <span>
+                Try submitting a new request or changing your search.
+            </span>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        FixTrack • School Repair & Maintenance Management System
+
+        <br>
+
+        © 2026 All Rights Reserved
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       IMAGE PREVIEW
+    ========================================================= */
+
+    function handleFileSelect(event) {
+
+        const file =
+            event.target.files[0];
+
+        const prompt =
+            document.getElementById(
+                "upload-prompt"
+            );
+
+        const preview =
+            document.getElementById(
+                "upload-preview"
+            );
+
+        const previewImg =
+            document.getElementById(
+                "preview-img"
+            );
+
+        const fileName =
+            document.getElementById(
+                "file-name"
+            );
+
+
+        if (!file) {
+
+            prompt.style.display =
+                "block";
+
+            preview.style.display =
+                "none";
+
+            return;
+        }
+
+
+        if (
+            file.size >
+            5 * 1024 * 1024
+        ) {
+
+            alert(
+                "The image must be smaller than 5 MB."
+            );
+
+            event.target.value = "";
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e) {
+
+                previewImg.src =
+                    e.target.result;
+
+                fileName.textContent =
+                    file.name;
+
+                prompt.style.display =
+                    "none";
+
+                preview.style.display =
+                    "flex";
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+
+
+    /* =========================================================
+       REMOVE POPUPS
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            const alerts =
+                document.querySelectorAll(
+                    ".alert"
+                );
+
+
+            alerts.forEach(
+                function(alert) {
+
+                    setTimeout(
+                        function() {
+
+                            alert.remove();
+
+                        },
+                        3800
+                    );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

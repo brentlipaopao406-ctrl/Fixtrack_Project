@@ -1,0 +1,46 @@
+FixTrack_Complete_Project/
+│  manage.py
+│  db.sqlite3
+│  db_original_backup.sqlite3
+│  requirements.txt
+│  README.md
+│  START_HERE.txt
+│  run_windows.bat
+│  previous_polished_dashboard_reference.html
+│
+├─repair_system/
+│  │  __init__.py
+│  │  settings.py
+│  │  urls.py
+│  │  wsgi.py
+│
+└─repairs/
+   │  __init__.py
+   │  admin.py
+   │  apps.py
+   │  forms.py
+   │  models.py
+   │  urls.py
+   │  views.py
+   │
+   ├─migrations/
+   │    0001_initial.py
+   │    0002_enhancements.py
+   │    __init__.py
+   │
+   ├─templates/
+   │   │  base.html
+   │   │  dashboard.html
+   │   ├─registration/login.html
+   │   ├─requests/request_detail.html
+   │   ├─requests/history_list.html
+   │   ├─technicians/list.html
+   │   ├─technicians/form.html
+   │   ├─technicians/confirm_delete.html
+   │   ├─categories/list.html
+   │   ├─categories/form.html
+   │   └─categories/confirm_delete.html
+   │
+   └─static/repairs/
+       ├─css/app.css
+       └─js/app.js

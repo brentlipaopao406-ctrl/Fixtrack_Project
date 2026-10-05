@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Delete {{ kind }} | FixTrack{% endblock %}
+{% block content %}<div class="panel narrow confirm"><h1>Delete {{ kind }}?</h1><p>Are you sure you want to delete <strong>{{ object }}</strong>?</p><form method="post">{% csrf_token %}<button class="danger" type="submit">Yes, Delete</button><a class="secondary" href="{% url 'technician_list' %}">Cancel</a></form></div>{% endblock %}

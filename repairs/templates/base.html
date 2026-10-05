@@ -1,0 +1,78 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}FixTrack{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'repairs/css/app.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'repairs/img/fixtrack-logo.png' %}">
+</head>
+<body>
+<div class="shell">
+    <header class="topbar">
+        <a href="{% url 'home' %}" class="brand">
+        <span class="brand-mark">
+    <img src="{% static 'repairs/img/fixtrack-icon.png' %}" alt="FixTrack">
+    </span>
+       
+            <span><strong>FixTrack</strong><small>Repair & Maintenance Management</small></span>
+        </a>
+        {% if request.user.is_authenticated %}
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">Dashboard</a>
+            {% if request.user.is_staff %}
+            <a href="{% url 'technician_list' %}">Technicians</a>
+            <a href="{% url 'category_list' %}">Categories</a>
+            <a href="{% url 'history_list' %}">History</a>
+            {% endif %}
+        </nav>
+        <div class="user-menu">
+            <span>{{ request.user.username }}</span>
+            <span class="role-chip">{% if request.user.is_staff %}ADMIN{% else %}TEACHER{% endif %}</span>
+            <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="link-button">Logout</button></form>
+        </div>
+        {% endif %}
+    </header>
+
+ {% if messages %}
+<div class="flash-stack" id="flashStack">
+    {% for message in messages %}
+    <div
+        class="flash flash-{{ message.tags }}"
+        style="
+           background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid #818cf8 !important;
+            box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25) !important;
+        "
+    >
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const flashStack = document.getElementById("flashStack");
+
+    if (flashStack) {
+        setTimeout(function () {
+            flashStack.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            flashStack.style.opacity = "0";
+            flashStack.style.transform = "translate(-50%, -20px)";
+
+            setTimeout(function () {
+                flashStack.remove();
+            }, 500);
+        }, 3000);
+    }
+});
+</script>
+{% endif %}
+
+    <main>{% block content %}{% endblock %}</main>
+    <footer>FixTrack • Repair & Maintenance Management System • © 2026</footer>
+</div>
+</body>
+</html>

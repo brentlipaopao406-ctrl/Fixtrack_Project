@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} | FixTrack{% endblock %}
+{% block content %}
+<div class="page-title"><div><span class="eyebrow">TEAM</span><h1>{{ title }}</h1></div><a class="secondary" href="{% url 'technician_list' %}">Back</a></div>
+<div class="panel narrow"><form method="post" class="stack-form">{% csrf_token %}{{ form.as_p }}<button class="primary" type="submit">Save Technician</button></form></div>
+{% endblock %}

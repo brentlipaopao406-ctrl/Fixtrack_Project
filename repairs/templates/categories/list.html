@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Categories | FixTrack{% endblock %}
+{% block content %}
+<div class="page-title"><div><span class="eyebrow">SETUP</span><h1>Categories</h1><p>Control the repair categories available in the request form.</p></div><a class="primary" href="{% url 'category_add' %}">+ Add Category</a></div>
+<div class="table-panel"><table><thead><tr><th>Name</th><th>Description</th><th>Status</th><th>Actions</th></tr></thead><tbody>{% for category in categories %}<tr><td><strong>{{ category.name }}</strong></td><td>{{ category.description|default:'—' }}</td><td><span class="badge {% if category.is_active %}status{% else %}category{% endif %}">{% if category.is_active %}Active{% else %}Inactive{% endif %}</span></td><td><a href="{% url 'category_edit' category.id %}">Edit</a> • <a class="danger-text" href="{% url 'category_delete' category.id %}">Delete</a></td></tr>{% empty %}<tr><td colspan="4">No categories yet.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}
