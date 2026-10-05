@@ -1846,3 +1846,119 @@ input[type="checkbox"] {
         align-items: flex-start;
     }
 }
+
+/* =========================
+   CATEGORIES TABLE
+   ========================= */
+
+.table-panel {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 24px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.table-panel table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+}
+
+.table-panel thead {
+    background: #f8fafc;
+}
+
+.table-panel th {
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid var(--border);
+}
+
+.table-panel td {
+    padding: 18px 20px;
+    text-align: left;
+    vertical-align: middle;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+}
+
+.table-panel tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-panel tbody tr {
+    transition: background .15s ease;
+}
+
+.table-panel tbody tr:hover {
+    background: #f8fafc;
+}
+
+.table-panel td strong {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.table-panel td:nth-child(1) {
+    width: 18%;
+}
+
+.table-panel td:nth-child(2) {
+    width: 42%;
+    color: var(--muted);
+}
+
+.table-panel td:nth-child(3) {
+    width: 15%;
+}
+
+.table-panel td:nth-child(4) {
+    width: 25%;
+    white-space: nowrap;
+}
+
+.table-panel a {
+    color: var(--blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.table-panel a:hover {
+    text-decoration: underline;
+}
+
+.table-panel .danger-text {
+    color: #dc2626 !important;
+}
+
+.table-panel .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .table-panel {
+        border-radius: 16px;
+    }
+
+    .table-panel table {
+        min-width: 700px;
+    }
+}
